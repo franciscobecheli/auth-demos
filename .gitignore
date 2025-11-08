@@ -1,0 +1,21 @@
+# dependencies
+node_modules/
+
+# build artifacts
+dist/
+out/
+build/
+
+# logs
+*.log
+
+# env files
+.env
+.env.*
+
+# zed local config
+.zed/
+
+# OS crap
+.DS_Store
+Thumbs.db
