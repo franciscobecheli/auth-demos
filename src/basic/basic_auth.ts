@@ -36,10 +36,13 @@ export async function routes(
 
 // biome-ignore lint/correctness/noUnusedVariables: used only in real HTTPS environments
 const isHttps = (request: FastifyRequest) => {
-  return request.protocol === 'https';
+  return (
+    request.protocol === 'https' ||
+    request.headers['x-forwarded-proto'] === 'https' // Allows reverse-proxy
+  );
 };
 
-// Parses Authorization header and returns credentials if valid. Returns null if the format is ivalid. Format must be username:password, base64 encoded in Basic Auth.
+// Parses Authorization header and returns credentials if valid. Returns null if the format is invalid. Format must be username:password, base64 encoded in Basic Auth.
 const parseAuthHeader = (
   request: FastifyRequest,
 ): BasicAuthCredentials | null => {
@@ -62,16 +65,13 @@ const parseAuthHeader = (
     'utf-8',
   );
 
-  const credentialTokens = decodedCredentials.split(':');
-  if (
-    credentialTokens.length !== 2 ||
-    !credentialTokens[0] ||
-    !credentialTokens[1]
-  ) {
-    return null;
-  }
+  const i = decodedCredentials.indexOf(':');
+  if (i === -1) return null;
 
-  return { username: credentialTokens[0], password: credentialTokens[1] };
+  return {
+    username: decodedCredentials.slice(0, i),
+    password: decodedCredentials.slice(i + 1),
+  };
 };
 
 const replyUnauthorized = (reply: FastifyReply): FastifyReply => {
