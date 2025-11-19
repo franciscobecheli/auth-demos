@@ -1,19 +1,10 @@
-import type {
-  FastifyInstance,
-  FastifyPluginOptions,
-  FastifyReply,
-  FastifyRequest,
-} from 'fastify';
+import type { FastifyPluginAsync, FastifyReply, FastifyRequest } from 'fastify';
 
-import {
-  type BasicAuthCredentials,
-  isCredentialsValid,
-} from '../credentials.js';
+// biome-ignore lint/correctness/noUnusedImports: used only in real HTTPS environments
+import { isCredentialValid, isHttps } from '../utils.js';
+import { type BasicAuthCredential, basicCredentials } from './credentials.js';
 
-export async function routes(
-  fastify: FastifyInstance,
-  _options: FastifyPluginOptions,
-) {
+export const routes: FastifyPluginAsync = async (fastify, _options) => {
   // Basic Auth has no /login endpoint. You have to pass the credentials via Authorization header to every protected resource you want to access. Then, every one of those endpoints must validate the credentials and deny/allow access
   fastify.get('/basic/protected-resource', async (request, reply) => {
     // This check is extremely important in production. It is disabled here because localhost runs in http (unprotected). Never allow http in production, you will be streaming your credentials for whoever wants to see.
@@ -21,31 +12,23 @@ export async function routes(
     //   return replyUnauthorized(reply);
     // }
 
-    const credentials = parseAuthHeader(request);
-    if (!credentials) {
+    const credential = parseAuthHeader(request);
+    if (!credential) {
       return replyUnauthorized(reply);
     }
 
-    if (!(await isCredentialsValid(credentials))) {
+    if (!(await isCredentialValid(credential, basicCredentials))) {
       return replyUnauthorized(reply);
     }
 
     return replyProtectedResource(reply);
   });
-}
-
-// biome-ignore lint/correctness/noUnusedVariables: used only in real HTTPS environments
-const isHttps = (request: FastifyRequest) => {
-  return (
-    request.protocol === 'https' ||
-    request.headers['x-forwarded-proto'] === 'https' // Allows reverse-proxy
-  );
 };
 
 // Parses Authorization header and returns credentials if valid. Returns null if the format is invalid. Format must be username:password, base64 encoded in Basic Auth.
 const parseAuthHeader = (
   request: FastifyRequest,
-): BasicAuthCredentials | null => {
+): BasicAuthCredential | null => {
   const basicAuthHeader = request.headers.authorization;
   if (!basicAuthHeader) {
     return null;
@@ -60,17 +43,17 @@ const parseAuthHeader = (
     return null;
   }
 
-  const base64Credentials = tokens[1];
-  const decodedCredentials = Buffer.from(base64Credentials, 'base64').toString(
+  const base64Credential = tokens[1];
+  const decodedCredential = Buffer.from(base64Credential, 'base64').toString(
     'utf-8',
   );
 
-  const i = decodedCredentials.indexOf(':');
+  const i = decodedCredential.indexOf(':');
   if (i === -1) return null;
 
   return {
-    username: decodedCredentials.slice(0, i),
-    password: decodedCredentials.slice(i + 1),
+    username: decodedCredential.slice(0, i),
+    password: decodedCredential.slice(i + 1),
   };
 };
 

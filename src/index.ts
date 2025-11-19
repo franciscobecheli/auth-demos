@@ -1,7 +1,10 @@
 import { fastifyHelmet } from '@fastify/helmet';
 import { fastifyRateLimit } from '@fastify/rate-limit';
 import { fastify } from 'fastify';
-import { routes as basicAuthRoutes } from './basic/basic_auth.js';
+import { routes as basicAuthRoutes } from './basic/basic-auth.js';
+import { routes as bearerTokenJwtRoutes } from './bearer-token/jwt.js';
+import { routes as bearerTokenOpaqueRoutes } from './bearer-token/opaque.js';
+import './env.js';
 
 const PORT = 3000;
 const HOST = 'localhost';
@@ -21,6 +24,8 @@ app.get('/', (_request, reply) => {
 });
 
 app.register(basicAuthRoutes);
+app.register(bearerTokenOpaqueRoutes);
+app.register(bearerTokenJwtRoutes);
 
 app.listen({ port: PORT, host: HOST }, (err, address) => {
   if (err) {
