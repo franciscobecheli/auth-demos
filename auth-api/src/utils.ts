@@ -1,7 +1,7 @@
 import { verify } from 'argon2';
 import type { FastifyRequest } from 'fastify';
 import type { BasicAuthCredential } from './basic/credentials.js';
-import type { BearerOpaqueCredential } from './bearer-token/crendentials.js';
+import type { BearerOpaqueCredential } from './bearer-token/credentials.js';
 
 const verifyPassword = async (password: string, hashedPassword: string) => {
   return verify(hashedPassword, password);

@@ -7,7 +7,7 @@ import { getUserFromToken, isCredentialValid, isHttps } from '../utils.js';
 import {
   type BearerOpaqueCredential,
   bearerOpaqueCredentials,
-} from './crendentials.js';
+} from './credentials.js';
 
 export const routes: FastifyPluginAsync = async (fastify, _options) => {
   const f = fastify.withTypeProvider<JsonSchemaToTsProvider>();

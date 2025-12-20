@@ -4,7 +4,7 @@ import { type JWTPayload, jwtVerify, SignJWT } from 'jose';
 import { env } from '../env.js';
 import { schema } from '../schemas.js';
 import { isCredentialValid } from '../utils.js';
-import { type JWTUserData, jwtCredentials } from './crendentials.js';
+import { type JWTUserData, jwtCredentials } from './credentials.js';
 
 const JWT_SECRET = env.JWT_SECRET;
 const JWT_ALG = 'HS256';
@@ -33,7 +33,8 @@ export const routes: FastifyPluginAsync = async (fastify, _options) => {
     // JWT allows you to store non-sensitive information on the token itself.
     // That way, you dont have to hit the db to know the user's id and
     // permissions, for example. Beware, this data is NOT encrypted, only
-    // encoded (base64), so never generate tokens with sensitive information.
+    // encoded (base64), so never generate tokens with sensitive information
+    // stored.
     const jwtClaims = { sub: user.id, permissions: user.permissions };
 
     const jwt = await generateJWT(

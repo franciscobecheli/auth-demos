@@ -1,0 +1,223 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <title>Auth API Demos — Basic, Opaque, JWT</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link href="styles.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div class="container">
+      <header>
+        <h1 class="title">Auth API Demos</h1>
+
+        <nav class="tabs" role="tablist" aria-label="Auth method">
+          <button
+            class="tab-btn"
+            role="tab"
+            aria-selected="true"
+            aria-controls="basic-panel"
+            id="basic-tab"
+          >
+            Basic
+          </button>
+
+          <button
+            class="tab-btn"
+            role="tab"
+            aria-selected="false"
+            aria-controls="opaque-panel"
+            id="opaque-tab"
+          >
+            Opaque
+          </button>
+
+          <button
+            class="tab-btn"
+            role="tab"
+            aria-selected="false"
+            aria-controls="jwt-panel"
+            id="jwt-tab"
+          >
+            JWT
+          </button>
+        </nav>
+      </header>
+
+      <main>
+        <!-- Basic -->
+
+        <section
+          class="panel"
+          role="tabpanel"
+          id="basic-panel"
+          aria-labelledby="basic-tab"
+        >
+          <h2>Basic Auth</h2>
+
+          <p class="note">
+            Send credentials in the Authorization header using the Basic scheme.
+          </p>
+
+          <form id="basic-form">
+            <div class="field">
+              <label for="basic-username">Username</label>
+
+              <div class="input">
+                <input
+                  id="basic-username"
+                  name="username"
+                  type="text"
+                  placeholder="alice"
+                  autocomplete="username"
+                />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="basic-password">Password</label>
+
+              <div class="input">
+                <input
+                  id="basic-password"
+                  name="password"
+                  type="password"
+                  placeholder="••••••••"
+                  autocomplete="current-password"
+                />
+              </div>
+            </div>
+
+            <div class="row">
+              <button class="btn" type="submit">Login (Basic)</button>
+
+              <button class="btn secondary" type="button" id="basic-reset">
+                Reset
+              </button>
+            </div>
+          </form>
+
+          <pre class="result" id="basic-result">No request yet.</pre>
+        </section>
+
+        <!-- Opaque -->
+
+        <section
+          class="panel hidden"
+          role="tabpanel"
+          id="opaque-panel"
+          aria-labelledby="opaque-tab"
+        >
+          <h2>Opaque Token</h2>
+
+          <p class="note">
+            Exchange credentials for an opaque token, then use Bearer
+            authorization.
+          </p>
+
+          <form id="opaque-form">
+            <div class="field">
+              <label for="opaque-username">Username</label>
+
+              <div class="input">
+                <input
+                  id="opaque-username"
+                  name="username"
+                  type="text"
+                  placeholder="alice"
+                  autocomplete="username"
+                />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="opaque-password">Password</label>
+
+              <div class="input">
+                <input
+                  id="opaque-password"
+                  name="password"
+                  type="password"
+                  placeholder="••••••••"
+                  autocomplete="current-password"
+                />
+              </div>
+            </div>
+
+            <div class="row">
+              <button class="btn" type="submit">Login (Token)</button>
+
+              <button class="btn secondary" type="button" id="opaque-reset">
+                Reset
+              </button>
+            </div>
+          </form>
+
+          <pre class="result" id="opaque-result">No request yet.</pre>
+        </section>
+
+        <!-- JWT -->
+
+        <section
+          class="panel hidden"
+          role="tabpanel"
+          id="jwt-panel"
+          aria-labelledby="jwt-tab"
+        >
+          <h2>JWT</h2>
+
+          <p class="note">
+            Exchange credentials for a JWT, then send with Bearer authorization.
+          </p>
+
+          <form id="jwt-form">
+            <div class="field">
+              <label for="jwt-username">Username</label>
+
+              <div class="input">
+                <input
+                  id="jwt-username"
+                  name="username"
+                  type="text"
+                  placeholder="alice"
+                  autocomplete="username"
+                />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="jwt-password">Password</label>
+
+              <div class="input">
+                <input
+                  id="jwt-password"
+                  name="password"
+                  type="password"
+                  placeholder="••••••••"
+                  autocomplete="current-password"
+                />
+              </div>
+            </div>
+
+            <div class="row">
+              <button class="btn" type="submit">Login (JWT)</button>
+
+              <button class="btn secondary" type="button" id="jwt-reset">
+                Reset
+              </button>
+            </div>
+          </form>
+
+          <pre class="result" id="jwt-result">No request yet.</pre>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="../dist/main.js"></script>
+  </body>
+</html>

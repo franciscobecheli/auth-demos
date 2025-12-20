@@ -1,0 +1,177 @@
+:root {
+  --bg: #0f1424;
+  --panel: #141b2f;
+  --border: #233057;
+  --text: #ecf2ff;
+  --muted: #a6b5d9;
+  --accent: #4b82ff;
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family:
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Helvetica,
+    Arial;
+  background: radial-gradient(1000px 500px at 10% 0%, #0f1424, #0b1020);
+  color: var(--text);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.container {
+  width: 100%;
+  max-width: 880px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.tabs {
+  display: flex;
+  gap: 6px;
+  padding: 6px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: color-mix(in oklab, var(--panel) 85%, transparent);
+}
+
+.tab-btn {
+  appearance: none;
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid transparent;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tab-btn[aria-selected="true"] {
+  color: var(--text);
+  border-color: color-mix(in oklab, var(--border), var(--accent) 35%);
+  background: color-mix(in oklab, var(--panel), var(--accent) 12%);
+}
+
+main {
+  display: grid;
+  gap: 12px;
+}
+
+.panel {
+  display: grid;
+  gap: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  background: var(--panel);
+}
+
+.hidden {
+  display: none;
+}
+
+h2 {
+  margin: 0 0 6px 0;
+  font-size: 15px;
+}
+
+p.note {
+  margin: 0 0 12px 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+form {
+  display: grid;
+  gap: 10px;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+label {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: color-mix(in oklab, var(--panel) 90%, transparent);
+}
+
+input {
+  width: 100%;
+  font: inherit;
+  color: var(--text);
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.btn {
+  appearance: none;
+  border: 1px solid color-mix(in oklab, var(--border), var(--accent) 25%);
+  background: color-mix(in oklab, var(--panel), var(--accent) 10%);
+  color: var(--text);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn.secondary {
+  border-color: var(--border);
+  background: color-mix(in oklab, var(--panel) 92%, transparent);
+  color: var(--muted);
+}
+
+pre.result {
+  margin: 0;
+  padding: 10px;
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  background: color-mix(in oklab, var(--panel) 95%, transparent);
+  color: var(--muted);
+  font-size: 12px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
